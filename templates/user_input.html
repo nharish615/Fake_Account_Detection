@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='account.css') }}">
+    <title>Title</title>
+</head>
+<body>
+<div class="topnav">
+<h1 style="color:white;"><center>Fake Account Detection Using Machine Learning</center></h1>
+  <p  class="active1 active"align="right"><p style="position:absolute;top:2px;right:30px;color:white;size:25pt;">{{ user_name }}<p>
+  <p style="position:absolute;top:20px;right:20px;"><a class="active1 active" href="/logout">Logout</a></p></p>
+</div>
+    <center>{% with messages = get_flashed_messages() %}
+   {% if messages %}
+     <ul class="flashes">
+        {% for message in messages %}
+         <div class="message_flash">{{ message }}</div>
+        {% endfor %}
+    </ul>
+  {% endif %}
+ {% endwith %}</center>
+
+    <div class="container"align="center">
+        <br>
+        <br>
+        <form action = "/get_tweets" method = "post" enctype="multipart/form-data">
+            <label for="psw"><b>Get twees</b></label>       <input type="text" placeholder="" name="nm" >
+            <br>
+            <br>
+            <button type="submit">get tweets</button>
+        </form>
+        <form action = "/fake_not" method = "post" enctype="multipart/form-data">
+            <label for="psw"><b>Enter News</b></label>       <input type="text" placeholder="" name="message" >
+            <br>
+            <br>
+            <button type="submit">Predict</button>
+        </form>
+
+    </div>
+
+
+</body>
+</html>

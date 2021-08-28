@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='account.css') }}">
+	 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+	 <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <title>Fake Account Detection</title>
+</head>
+<body style="background-color:#DCE1E3;">
+<div class="topnav">
+<h1 style="color:white;"><center>Fake Account Detection Using Machine Learning</center></h1>
+  <p  class="active1 active"align="right"><p style="position:absolute;top:2px;right:30px;color:white;size:25pt;">{{ user_name }}<p>
+  <p style="position:absolute;top:20px;right:20px;"><a class="active1 active" href="/logout">Logout</a></p>
+  <p style="position:absolute;top:0px;right:100px;"><a class="active1" href="/fad_parameter">Set Parameters</a></p></p><br>
+</div>
+    <center>{% with messages = get_flashed_messages() %}
+   {% if messages %}
+     <ul class="flashes">
+        {% for message in messages %}
+         <div class="message_flash"align="center">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		 <script>
+		 alert("{{ message }}");
+		 </script>
+		 </div>
+        {% endfor %}
+    </ul>
+  {% endif %}
+ {% endwith %}</center>
+<div class="wrapper">
+    <div class="sidebar">
+        <h2>Sidebar</h2>
+            <a href="#"onclick="alert('Upload dataset first')"><i class="fas  fa-file-import"></i>&nbsp;&nbsp;Upload Dataset</a>
+            <a href="#"onclick="alert('Upload dataset first')"><i class="fas fa-columns"></i>&nbsp;&nbsp;Split Dataset</a>
+            <a href="#"onclick="alert('Upload dataset first')"><i class="fas fa-assistive-listening-systems"></i>&nbsp;&nbsp;Machine Leaning </a>
+	</div>
+</div>
+<div class="container"align="center">
+			<div class="drag-area">
+				<h1>Upload File</h1>
+				<img src="static/upload.png"class="icon"></img>
+				<form action = "/fad_upload_dataset" method = "post" enctype="multipart/form-data">
+				<input type="file" placeholder="" name="file" required>
+				<button type="submit">Upload</button>
+			  </div>
+        <br>
+        <br>
+</div>
+
+
+</body>
+</html>

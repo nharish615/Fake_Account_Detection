@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='account.css') }}">
+	 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+	 <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	 <script>
+		jQuery(function(){
+         jQuery('#showall').click(function(){
+               jQuery('.targetDiv').show();
+        });
+        jQuery('.showSingle').click(function(){
+              jQuery('.targetDiv').hide();
+              jQuery('#div'+$(this).attr('target')).show();
+        });
+		});
+	 window.addEventListener("load", function () {
+			const loader = document.querySelector(".loader");
+			loader.className += " hidden"; // class "loader hidden"
+		});
+		
+	 </script>
+	 
+	 <style>
+		 td {
+				text-align: center;
+				border: 1px solid black;
+			 }
+		 th {
+				width: 350px;
+				text-align: center;
+				border: 1px solid black;
+				padding: 10px;
+				background-color: #E54D2F;
+				color: white;
+				
+			 }
+		.traindata{
+				position:absolute;
+				left:-350px;
+				top:80px;
+				width:1300px;
+				overflow: scroll;
+				height:320px;
+			}
+		.testdata{
+				position:absolute;
+				left:-350px;
+				top:400px;
+				width:1300px;
+				overflow: scroll;
+				height:320px;
+			}
+			.main-con1{
+				position:absolute;
+				left:100px;
+				top:20px;  
+			}
+			.sub-con1
+			{	
+				position:absolute;
+				left:400px;
+				top:350px; 
+				width: 250px;
+				height: 50px;
+				font-size:25pt;
+				background-color: orange;  
+				border-radius: 12px;
+				cursor:pointer;
+			}
+			.sub-con2
+			{	
+				position:absolute;
+				left:900px;
+				top:100px; 
+				width: 250px;
+				height: 100px;
+				font-size:25pt;
+				background-color: orange;  
+				border-radius: 12px;
+				cursor:pointer;
+			}
+			.icon{
+			width:300px;
+			height:230px;
+			}
+			.loader {
+				position: fixed;
+				z-index: 99;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background:#DCE1E3;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.loader > img {
+				width: 250px;
+				height:150px
+			}
+
+			.loader.hidden {
+				animation: fadeOut 1.5s;
+				animation-fill-mode: forwards;
+			}
+
+			@keyframes fadeOut {
+				100% {
+					opacity:20;
+					visibility: hidden;
+				}
+			}
+
+			.thumb {
+				height: 100px;
+				border: 1px solid black;
+				margin: 10px;
+			}
+			div.menu
+			{  
+			   margin: 5% 5%;
+			   background: transparent;
+			}
+			
+			.container1
+			{
+			width:1200px;
+			position:absolute;
+			left:275px;
+			top:20px;
+			}
+			.bar
+			{	
+				position:absolute;
+				left:850px;
+				top:185px; 
+			}
+	 </style>
+    <title>Fake Account Detection</title>
+</head>
+<body style="background-color:#DCE1E3;">
+<div class="topnav">
+<h1 style="color:white;"><center>Fake Account Detection Using Machine Learning</center></h1>
+  <p  class="active1 active"align="right"><p style="position:absolute;top:2px;right:30px;color:white;size:25pt;">{{ user_name }}<p>
+  <p style="position:absolute;top:20px;right:20px;"><a class="active1" href="/logout">Logout</a></p>
+  <p style="position:absolute;top:0px;right:100px;"><a class="active1" href="/Restart">Restart</a></p>
+  <p style="position:absolute;top:0px;right:180px;"><a class="active1" href="/fad_parameter">Set Parameters</a></p></p><br>
+</div>
+    <center>{% with messages = get_flashed_messages() %}
+   {% if messages %}
+     <ul class="flashes">
+        {% for message in messages %}
+         <div class="message_flash">{{ message }}</div>
+        {% endfor %}
+    </ul>
+  {% endif %}
+ {% endwith %}</center>
+<div class="wrapper">
+    <div class="sidebar">
+        <h2>Sidebar</h2>
+            {% if upload_succ==-1 %}
+				<a href="/fad_upload_dataset"><i class="fas  fa-file-import"></i>&nbsp;Upload Dataset</a>
+			{% else %}
+				<a href="/fad_upload_dataset"><i class="fas fa-home"></i>&nbsp;Upload Dataset&nbsp;<i class="fas fa-check-circle"></i></a>
+			{% endif %}
+			{% if split_succ==-1 %}
+			<a href="/fad_split_dataset"><i class="fas fa-columns"></i>&ensp;Split Dataset</a>
+			{% else %}
+            <a href="/fad_split_dataset"><i class="fas fa-columns"></i>&ensp;Split Dataset&nbsp;<i class="fas fa-check-circle"></i></a>
+			{% endif %}
+			{% if ml_succ==-1 %}
+            <a href="#"onclick="alert('Go back split dataset first')"><i class="fas fa-assistive-listening-systems"></i>&ensp;Machine Leaning </a>
+            {% else %}
+			<a href="/fad_ml"><i class="fas fa-assistive-listening-systems"></i>&ensp;Machine Leaning&nbsp;<i class="fas fa-check-circle"></i></a>
+			{% endif %}
+			<a href="/fad_analysis"><i class="fas fa-chart-bar"></i>&nbsp;Analysis</a>
+            <a href="/fad_user_input"><i class="fas fa-address-book"></i>&nbsp;Prediction</a>
+	</div>
+</div>
+<div class="loader">
+    <img src="static/loader1.gif" alt="Loading..." /></br>
+	<h2>Result Analysis....</h2>
+</div>
+<div class="container1">
+
+	{% if ml_succ==1 %}
+			<div class="menu">
+			<a  id="showall"style="background: #A8DADC; color: #222;display:inline-block;
+			   margin:0 1%;padding:2%;border-radius: 10%;-webkit-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   -moz-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);cursor:pointer;font-size:20pt;">All</a>
+			<a class="showSingle" target="1"style="background:#E63946;color: #eee;display:inline-block;
+			   margin:0 1%;padding:2%;border-radius: 10%;-webkit-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   -moz-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);cursor:pointer;font-size:20pt;">SVM</a>
+			   
+			<a  class="showSingle" target="2"style="background: #1D3557;color: #eee;display:inline-block;
+			   margin:0 1%;padding:2%;border-radius: 10%;-webkit-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   -moz-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);cursor:pointer;font-size:20pt;">Random Forest</a>
+
+			<a  class="showSingle" target="3"style="background: #A8DADC; color: #222;display:inline-block;
+			   margin:0 1%;padding:2%;border-radius: 10%;-webkit-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   -moz-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);cursor:pointer;font-size:20pt;">KNN</a>
+			   
+			<a  class="showSingle" target="4"style="background: #457B9D;color: #eee;display:inline-block;
+			   margin:0 1%;padding:2%;border-radius: 10%;-webkit-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   -moz-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);cursor:pointer;font-size:20pt;">Naive Bayes</a>
+			   
+			   
+			</div>
+			<section class="cnt">
+				<div id="div0" class="targetDiv1">
+					<table class="bar">
+					<tr>
+					<th >Bar Chart</th>
+					</tr>
+					<tr>
+					<td><img src="static/All_bar.png"width="550px"height="450px"/></td>
+					</tr>
+					</table>
+				</div>
+				
+				<div id="div1" class="targetDiv">
+					<table class="tb">
+					<tr>
+					<th colspan="3">SVM Algorithm</th>
+					</tr>
+					<tr>
+					<td><img src="static/SVM Algorithm.png"width="350px"height="350px"/></td>
+					<td><img src="static/SVM Algorithm Confusion matrix.png"width="350px"height="350px"/></td>
+					<td>
+					<h2 style="color:#E54D2F;">Accuracy<br>{{'%0.2f'| format(acc[3]|float)}}%</h2>
+					</td>
+					</tr>
+					</table>
+				</div>
+				
+				
+				<div id="div2" class="targetDiv">
+				<table class="tb">
+					<tr>
+					<th colspan="3">Random Forest Algorithm</th>
+					</tr>
+					<tr>
+					<td><img src="static/Random Forest Algorithm.png"width="350px"height="350px"/></td>
+					<td><img src="static/Random Forest Confusion matrix.png"width="350px"height="350px"/></td>
+					<td>
+					<h2 style="color:#E54D2F;">Accuracy<br>{{'%0.2f'| format(acc[2]|float)}}%&nbsp;</h2>
+					</td>
+					</tr>
+					</table>
+				</div>
+				
+				
+				<div id="div3" class="targetDiv">
+				<table class="tb">
+					<tr>
+					<th colspan="3">KNN Algorithm</th>
+					</tr>
+					<tr>
+					<td><img src="static/KNN Algorithm.png"width="350px"height="350px"/></td>
+					<td><img src="static/KNN Confusion matrix.png"width="350px"height="350px"/></td>
+					<td>
+					<h2 style="color:#E54D2F;">Accuracy<br>{{'%0.2f'| format(acc[0]|float)}}%&nbsp;</h2>
+					</td>
+					</tr>
+					</table>
+				</div>
+				
+				<div id="div4" class="targetDiv">
+				<table class="tb">
+					<tr>
+					<th colspan="3">Naive Bayes Algorithm</th>
+					</tr>
+					<tr>
+					<td><img src="static/NB Algorithm.png"width="350px"height="350px"/></td>
+					<td><img src="static/NB Algorithm Confusion matrix.png"width="350px"height="350px"/></td>
+					<td>
+					<h2 style="color:#E54D2F;">Accuracy<br>{{'%0.2f'| format(acc[1]|float)}}%&nbsp;</h2>
+					</td>
+					</tr>
+					</table>
+				</div>
+				
+			</section>
+			
+	{% endif %}
+</div>
+</body>
+</html>

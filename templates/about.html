@@ -1,0 +1,54 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
+
+    <title>{{ title }}</title>
+</head>
+<div class="topnav">
+	<br>
+    <a href="about"><button class="active1 active">About</button></a>
+
+
+    <a href="user_login" ><button class="deactive" onclick="document.getElementById('id01').style.display='block'">LOG IN</button></a>
+	
+
+    <!--a href="doctor_login"><button onclick="document.getElementById('id02').style.display='block'">Doctor</button></a-->
+
+    <a  href="/home"><button class="deactive">Home</button></a>
+	<br>
+
+</div>
+{% block content %}
+    <h2 style="position:absolute;left:150px;margin:50px;width:70%;">About Project</h2>
+    <h3 style="position:absolute;left:200px;margin:100px;width:65%;text-align: justify;text-justify: inter-word;">
+	
+	Online Social Media is dominating the world in several ways. Day by day the number
+	of users using social media is increasing drastically. The main advantage of online 
+	social media is that we can connect to people easily and communicate with them in a 
+	better way. 
+
+This provided a new way of a potential attack, such as fake identity, false information,
+ etc. A recent survey suggests that the number of accounts present in the social media is
+ much greater than the users using it. This suggests that fake accounts have been increased
+ in the recent years. Online social media providers face difficulty in identifying these 
+ fake accounts. <br><br>
+
+The need for identifying these fake accounts is that social media is flooded with false 
+information, advertisements, etc. Traditional methods cannot distinguish between real and 
+fake accounts efficiently. Improvement in fake account creation made the previous works outdated. 
+
+The new models created used different approaches such as automatic posts or comments, spreading
+ false information or spam with advertisements to identify fake accounts. Due to the increase
+ in the creation of the fake accounts different algorithms with different attributes are use.
+ Previously use algorithms like naïve Bayes, support vector machine, random forest has become
+ inefficient in finding the fake accounts. In this research, we came up with an innovative 
+ method to identify fake accounts.
+ <br><br>
+we implement this technique to identify the malicious activities in social contact.
+
+	To detect and avoid fake identities it is need to understand the dynamic contagion. In exist there
+	are many models to detect the fake identities by bots or humans. Sybil identities are generally 
+	focused on famous social media platforms. The proposed system discussed in this paper is to detect
+	the Sybil and troll identities using machine learning engineered techniques</h3>
+{% endblock content %}

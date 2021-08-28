@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='account.css') }}">
+	 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+	 <link rel="stylesheet" href={{url_for('static',filename='predictor.css')}}>
+	 <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+	 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+	 <style>
+		 td {
+				width: 150px;
+				border: 1px solid black;
+				padding: 5px;
+				background-color: #f2f2f2;
+			 }
+		 th {
+				width: 150px;
+				text-align: center;
+				border: 1px solid black;
+				padding: 5px;
+				background-color: #E54D2F;
+				color: white;
+				
+			 }
+		.traindata{
+				position:absolute;
+				left:-150px;
+				top:80px;
+				width:1300px;
+				overflow: scroll;
+				height:320px;
+			}
+		.testdata{
+				position:absolute;
+				left:-150px;
+				top:400px;
+				width:1300px;
+				overflow: scroll;
+				height:320px;
+			}
+			.main-con1{
+				position:absolute;
+				left:100px;
+				top:20px;  
+			}
+			.sub-con1
+			{	
+				position:absolute;
+				left:400px;
+				top:150px; 
+				width: 250px;
+				height: 50px;
+				font-size:25pt;
+				background-color: orange;  
+				border-radius: 12px;
+				cursor:pointer;
+			}
+			.sub-con2
+			{	
+				position:absolute;
+				left:400px;
+				top:400px; 
+				width: 250px;
+				height: 50px;
+				font-size:25pt;
+				background-color: orange;  
+				border-radius: 12px;
+				cursor:pointer;
+			} 
+			.icon{
+			width:300px;
+			height:230px;
+			}
+			.container1
+			{
+			width:1000px;
+			}
+	 </style>
+    <title>Fake Account Detection</title>
+</head>
+<body style="background-color:#DCE1E3;">
+<div class="topnav">
+<h1 style="color:white;"><center>Fake Account Detection Using Machine Learning</center></h1>
+  <p  class="active1 active"align="right"><p style="position:absolute;top:2px;right:30px;color:white;size:25pt;">{{ user_name }}<p>
+  <p style="position:absolute;top:20px;right:20px;"><a class="active1" href="/logout">Logout</a></p>
+  <p style="position:absolute;top:0px;right:100px;"><a class="active1" href="/Restart">Restart</a></p></p>
+</div>
+    <center>{% with messages = get_flashed_messages() %}
+   {% if messages %}
+     <ul class="flashes">
+        {% for message in messages %}
+         <div class="message_flash">{{ message }}</div>
+        {% endfor %}
+    </ul>
+  {% endif %}
+ {% endwith %}</center>
+<div class="wrapper">
+    <div class="sidebar">
+        <h2>Sidebar</h2>
+            {% if upload_succ==-1 %}
+				<a href="/fad_upload_dataset"><i class="fas  fa-file-import"></i>&nbsp;Upload Dataset</a>
+			{% else %}
+				<a href="/fad_upload_dataset"><i class="fas fa-home"></i>&nbsp;Upload Dataset&nbsp;<i class="fas fa-check-circle"></i></a>
+			{% endif %}
+			{% if split_succ==-1 %}
+			<a href="/fad_split_dataset"><i class="fas fa-columns"></i>&ensp;Split Dataset</a>
+			{% else %}
+            <a href="/fad_split_dataset"><i class="fas fa-columns"></i>&ensp;Split Dataset&nbsp;<i class="fas fa-check-circle"></i></a>
+			{% endif %}
+			{% if ml_succ==-1 %}
+            <a href="#"onclick="alert('Go back split dataset first')"><i class="fas fa-assistive-listening-systems"></i>&ensp;Machine Leaning </a>
+            {% else %}
+			<a href="/fad_ml"><i class="fas fa-assistive-listening-systems"></i>&ensp;Machine Leaning&nbsp;<i class="fas fa-check-circle"></i></a>
+			{% endif %}
+			<a href="/fad_analysis"><i class="fas fa-chart-bar"></i>&nbsp;Analysis</a>
+            <a href="/fad_user_input"><i class="fas fa-address-book"></i>&nbsp;Prediction</a>
+	</div>
+</div>
+<div class="container1"align="center">
+        <form class="form" action="/set", method="POST">
+		<table>
+		<tr>	
+			<th colspan="3"><h2 class="my-3 text-center">Set Parameter's</h2></th>
+		</tr>
+		<tr>
+			<td>Split Parameter</td>
+			<td><label for="mintemp" class="mintemp"><font class="fonts">Split Ratio</font></label></td>
+            <td><input type="text" class="form-control" id="csplit" name="csplit"value="{{csplit}}"required></td>
+        </tr>
+		<tr>   
+			<td rowspan="1">KNN Parameter</td>
+            <td><label for="maxtemp" class="maxtemp"><font class="fonts">Number Of Neighbors</font></label></td>
+            <td><input type="text" class="form-control" id="n_neighbors" name="n_neighbors"value="{{n_neighbors}}"required></td>
+        </tr>
+		<tr>    
+			<td rowspan="3">Random Forest Parameter</td>
+            <td><label for="rainfall" class="rainfall"><font class="fonts">Number of Estimators</font></label></td>
+            <td><input type="text" class="form-control" id="n_estimators" name="n_estimators"value="{{n_estimators}}"required></td>
+        </tr>
+		<tr>    
+            <td><label for="evaporation" class="evaporation"><font class="fonts">Maximum Depth</font></label></td>
+            <td><input type="text" class="form-control" id="max_depth" name="max_depth"value="{{max_depth}}"required></td>
+        </tr>
+		<tr>    
+            <td><label for="sunshine" class="sunshine"><font class="fonts">Minimum Samples Split</font></label></td>
+            <td><input type="text" class="form-control" id="min_samples_split" name="min_samples_split"value="{{min_samples_split}}"required></td>
+        </tr>
+		<tr> 
+			<td rowspan="4">SVM Parameter</td>		
+            <td><label for="windgustspeed" class="windgustspeed"><font class="fonts">Range Start </font></label></td>
+            <td><input type="text" class="form-control" id="rs" name="rs"value="{{rs}}"required></td>
+        </tr>
+		<tr>    
+            <td><label for="windspeed9am" class="windspeed9am"><font class="fonts">Range End</font></label></td>
+            <td><input type="text" class="form-control" id="re" name="re"value="{{re}}"required></td>
+        </tr>
+		<tr>    
+            <td><label for="windspeed3pm" class="windspeed3pm"><font class="fonts">Increase Points </font></label></td>
+            <td><input type="text" class="form-control" id="icp" name="icp"value="{{icp}}"required></td>
+        </tr>
+		<tr>    
+            <td><label for="humidity9am" class="humidity9am"><font class="fonts">Number Of Splits</font></label></td>
+            <td><input type="text" class="form-control" id="n_splits" name="n_splits"value="{{n_splits}}"required></td>
+        </tr>
+		<tr>    
+            <td colspan="3">
+                    <button type="submit" class="btn btn-info button" style="margin-left: 35%;">Set Parameters</button>
+             </td>
+		</tr>
+		</table>
+		</form>
+</div>
+</body>
+</html>

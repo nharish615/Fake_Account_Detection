@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='account.css') }}">
+	 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+	 <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	 <script>
+		jQuery(function(){
+         jQuery('#showall').click(function(){
+               jQuery('.targetDiv').show();
+        });
+        jQuery('.showSingle').click(function(){
+              jQuery('.targetDiv').hide();
+              jQuery('#div'+$(this).attr('target')).show();
+        });
+		});
+	 window.addEventListener("load", function () {
+			const loader = document.querySelector(".loader");
+			loader.className += " hidden"; // class "loader hidden"
+		});
+		let options = {
+        startAngle: -1.55,
+        size: 150,
+        value: 0.85,
+        fill: {gradient: ['#a445b2', '#fa4299']}
+      }
+      $(".circle .bar").circleProgress(options).on('circle-animation-progress',
+      function(event, progress, stepValue){
+        $(this).parent().find("span").text(String(stepValue.toFixed(2).substr(2)) + "%");
+      });
+      $(".js .bar").circleProgress({
+        value: 0.95
+      });
+      $(".react .bar").circleProgress({
+        value: 0.80
+      });
+	 </script>
+	 
+	 <style>
+		 td {
+				width: 350px;
+				text-align: center;
+				border: 1px solid black;
+				background-color: #f2f2f2;
+				background-repeat:no-repeat;
+				background-size:250px 200px;    
+				height: 200px;
+			 }
+		 th {
+				width: 350px;
+				text-align: center;
+				border: 1px solid black;
+				padding:10px;
+				background-color: #E54D2F;
+				color: white;
+				
+			 }
+		.traindata{
+				position:absolute;
+				left:-350px;
+				top:80px;
+				width:1300px;
+				overflow: scroll;
+				height:320px;
+			}
+		.testdata{
+				position:absolute;
+				left:-350px;
+				top:400px;
+				width:1300px;
+				overflow: scroll;
+				height:320px;
+			}
+			.main-con1{
+				position:absolute;
+				left:100px;
+				top:20px;  
+			}
+			.sub-con1
+			{	
+				position:absolute;
+				left:400px;
+				top:350px; 
+				width: 250px;
+				height: 50px;
+				font-size:25pt;
+				background-color: orange;  
+				border-radius: 12px;
+				cursor:pointer;
+			}
+			.sub-con2
+			{	
+				position:absolute;
+				left:900px;
+				top:100px; 
+				width: 250px;
+				height: 100px;
+				font-size:25pt;
+				background-color: orange;  
+				border-radius: 12px;
+				cursor:pointer;
+			}
+			.icon{
+			width:300px;
+			height:230px;
+			}
+			.loader {
+				position: fixed;
+				z-index: 99;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background:#DCE1E3;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.loader > img {
+				width: 250px;
+				height:150px
+			}
+
+			.loader.hidden {
+				animation: fadeOut 1.5s;
+				animation-fill-mode: forwards;
+			}
+
+			@keyframes fadeOut {
+				100% {
+					opacity:20;
+					visibility: hidden;
+				}
+			}
+
+			.thumb {
+				height: 100px;
+				border: 1px solid black;
+				margin: 10px;
+			}
+			div.menu
+			{  
+			   margin: 5% 5%;
+			   background: transparent;
+			}
+
+
+	 </style>
+    <title>Fake Account Detection</title>
+</head>
+<body style="background-color:#DCE1E3;">
+<div class="topnav">
+<h1 style="color:white;"><center>Fake Account Detection Using Machine Learning</center></h1>
+  <p  class="active1 active"align="right"><p style="position:absolute;top:2px;right:30px;color:white;size:25pt;">{{ user_name }}<p>
+  <p style="position:absolute;top:20px;right:20px;"><a class="active1" href="/logout">Logout</a></p>
+  <p style="position:absolute;top:0px;right:100px;"><a class="active1" href="/Restart">Restart</a></p>
+  <p style="position:absolute;top:0px;right:180px;"><a class="active1" href="/fad_parameter">Set Parameters</a></p></p><br>
+</div>
+    <center>{% with messages = get_flashed_messages() %}
+   {% if messages %}
+     <ul class="flashes">
+        {% for message in messages %}
+         <div class="message_flash">{{ message }}</div>
+        {% endfor %}
+    </ul>
+  {% endif %}
+ {% endwith %}</center>
+<div class="wrapper">
+    <div class="sidebar">
+        <h2>Sidebar</h2>
+            {% if upload_succ==-1 %}
+				<a href="/fad_upload_dataset"><i class="fas  fa-file-import"></i>&nbsp;Upload Dataset</a>
+			{% else %}
+				<a href="/fad_upload_dataset"><i class="fas fa-home"></i>&nbsp;Upload Dataset&nbsp;<i class="fas fa-check-circle"></i></a>
+			{% endif %}
+			{% if split_succ==-1 %}
+			<a href="/fad_split_dataset"><i class="fas fa-columns"></i>&ensp;Split Dataset</a>
+			{% else %}
+            <a href="/fad_split_dataset"><i class="fas fa-columns"></i>&ensp;Split Dataset&nbsp;<i class="fas fa-check-circle"></i></a>
+			{% endif %}
+			{% if ml_succ==-1 %}
+            <a href="#"onclick="alert('Go back split dataset first')"><i class="fas fa-assistive-listening-systems"></i>&ensp;Machine Leaning </a>
+            {% else %}
+			<a href="/fad_ml"><i class="fas fa-assistive-listening-systems"></i>&ensp;Machine Leaning&nbsp;<i class="fas fa-check-circle"></i></a>
+			{% endif %}
+			<a href="/fad_analysis"><i class="fas fa-chart-bar"></i>&nbsp;Analysis</a>
+            <a href="/fad_user_input"><i class="fas fa-address-book"></i>&nbsp;Prediction</a>
+	</div>
+</div>
+<div class="loader">
+    <img src="static/loader1.gif" alt="Loading..." /></br>
+	<h2>Predicting Result.....</h2>
+</div>
+<div class="container1"align="center">
+
+	{% if ml_succ==1 %}
+			<div class="menu">
+			<a  id="showall"style="background: #A8DADC; color: #222;display:inline-block;
+			   margin:0 1%;padding:2%;border-radius: 10%;-webkit-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   -moz-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);cursor:pointer;font-size:20pt;">All</a>
+			<a class="showSingle" target="1"style="background:#E63946;color: #eee;display:inline-block;
+			   margin:0 1%;padding:2%;border-radius: 10%;-webkit-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   -moz-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);cursor:pointer;font-size:20pt;">SVM</a>
+			   
+			<a  class="showSingle" target="2"style="background: #1D3557;color: #eee;display:inline-block;
+			   margin:0 1%;padding:2%;border-radius: 10%;-webkit-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   -moz-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);cursor:pointer;font-size:20pt;">Random Forest</a>
+
+			<a  class="showSingle" target="3"style="background: #A8DADC; color: #222;display:inline-block;
+			   margin:0 1%;padding:2%;border-radius: 10%;-webkit-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   -moz-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);cursor:pointer;font-size:20pt;">KNN</a>
+			   
+			<a  class="showSingle" target="4"style="background: #457B9D;color: #eee;display:inline-block;
+			   margin:0 1%;padding:2%;border-radius: 10%;-webkit-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   -moz-box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);
+			   box-shadow: 0px 3px 11px 2px rgba(0,0,0,0.2);cursor:pointer;font-size:20pt;">Naive Bayes</a>
+			   
+			</div>
+			<section class="cnt">
+				<div id="div0" class="targetDiv1">
+					<table >
+					<tr>
+					<th>Algorithm Name</th>
+					<th>Image</th>
+					<th>Result</th>
+					</tr>
+					</table>
+				</div>
+				
+				<div id="div1" class="targetDiv">
+				{% if svm_pred==1 %}
+				<table>
+				<tr>
+				<td>SVM Algorithm</td>
+				<td style="background-image:url('static/fake.png');"></td>
+				<td>Account is fake..</td>
+				</tr>
+				</table>
+				{% else %}
+				<table>
+				<tr>
+				<td>SVM Algorithm</td>
+				<td style="background-image:url('static/real.png');"></td>
+				<td>Account is Real..</td>
+				</tr>
+				</table>
+				{% endif %}
+				</div>
+				
+				
+				<div id="div2" class="targetDiv">
+				{% if rf_pred==1 %}
+				<table 
+				<tr>
+				<td>Random Forest Algorithm</td>
+				<td style="background-image:url('static/fake.png');"></td>
+				<td>Account is fake..</td>
+				</tr>
+				</table>
+				{% else %}
+				<table>
+				<tr>
+				<td>Random Forest Algorithm</td>
+				<td style="background-image:url('static/real.png');"></td>
+				<td>Account is Real..</td>
+				</tr>
+				</table>
+				{% endif %}
+				</div>
+				
+				
+				<div id="div3" class="targetDiv">
+				{% if knn_pred==1 %}
+				<table >
+				<tr>
+				<td>KNN Algorithm</td>
+				<td style="background-image:url('static/fake.png');"></td>
+				<td>Account is fake..</td>
+				</tr>
+				</table>
+				</center>
+				{% else %}
+				<table >
+				<tr>
+				<td>KNN Algorithm</td>
+				<td style="background-image:url('static/real.png');"></td>
+				<td>Account is Real..</td>
+				</tr>
+				</table>
+				{% endif %}
+				</div>
+				
+				<div id="div4" class="targetDiv">
+				{% if nb_pred==1 %}
+				<table>
+				<tr>
+				<td>Naive Bayes Algorithm</td>
+				<td style="background-image:url('static/fake.png');"></td>
+				<td>Account is fake..</td>
+				</tr>
+				</table>
+				</center>
+				{% else %}
+				<table>
+				<tr>
+				<td>Naive Bayes Algorithm</td>
+				<td style="background-image:url('static/real.png');"></td>
+				<td>Account is Real..</td>
+				</tr>
+				</table>
+				{% endif %}
+				</div>
+			</section>
+			
+	{% endif %}
+</div>
+</body>
+</html>

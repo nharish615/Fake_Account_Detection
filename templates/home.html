@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
+
+    <title>Fake Account Detection</title>
+</head>
+<body>
+
+
+<div class="topnav">
+	<br>
+    <a href="about"><button class="deactive">About</button></a>
+
+
+    <a href="user_login" ><button class="deactive" onclick="document.getElementById('id01').style.display='block'">LOG IN</button></a>
+	
+
+    <!--a href="doctor_login"><button onclick="document.getElementById('id02').style.display='block'">Doctor</button></a-->
+
+    <a  href="/home"><button class="active1 active">Home</button></a>
+	<br>
+
+</div>
+
+<h1><center>Fake Account Detection Using Machine Learning</center></h1>
+
+<center>
+<div class="slideshow-container">
+
+<div class="mySlides fade">
+
+  <img src="{{url_for('static', filename='fake_front1.jpg')}}" align="middle" />
+
+</div>
+
+<div class="mySlides fade">
+
+  <img src="{{url_for('static', filename='fake_front2.jpg')}}" align="middle" />
+</div>
+
+<div class="mySlides fade">
+
+  <img src="{{url_for('static', filename='fake_front3.jpg')}}" align="middle" />
+</div>
+<div class="slideshow-container">
+
+<div class="mySlides fade">
+
+  <img src="{{url_for('static', filename='fake_front4.jpg')}}" align="middle" />
+
+</div>
+
+<div class="mySlides fade">
+
+  <img src="{{url_for('static', filename='fake_front5.jpg')}}" align="middle" />
+</div>
+
+<div class="mySlides fade">
+
+  <img src="{{url_for('static', filename='fake_front6.jpg')}}" align="middle" />
+</div>
+<div class="mySlides fade">
+
+  <img src="{{url_for('static', filename='fake_front7.jpg')}}" align="middle" />
+</div>
+
+<div class="mySlides fade">
+
+  <img src="{{url_for('static', filename='fake_front8.jpg')}}" align="middle" />
+</div>
+<div class="mySlides fade">
+
+  <img src="{{url_for('static', filename='fake_front9.jpg')}}" align="middle" />
+</div>
+
+</div>
+</center>
+<br>
+
+<div style="text-align:center">
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+</div>
+<script src="{{url_for('static', filename='login.js')}}"></script>
+
+<script src="{{url_for('static', filename='main.js')}}"></script>
+
+
+</body>
+
+</html>

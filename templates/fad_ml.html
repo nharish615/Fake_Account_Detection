@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='account.css') }}">
+	 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+	 <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+	 <script>
+	 window.addEventListener("load", function () {
+			const loader = document.querySelector(".loader");
+			loader.className += " hidden"; // class "loader hidden"
+		});
+	 </script>
+	 <style>
+		 td {
+				width: 150px;
+				text-align: center;
+				border: 1px solid black;
+				padding: 5px;
+				background-color: #f2f2f2;
+			 }
+		 th {
+				width: 150px;
+				text-align: center;
+				border: 1px solid black;
+				padding: 5px;
+				background-color: #E54D2F;
+				color: white;
+				
+			 }
+		.traindata{
+				position:absolute;
+				left:-150px;
+				top:80px;
+				width:1300px;
+				overflow: scroll;
+				height:320px;
+			}
+		.testdata{
+				position:absolute;
+				left:-150px;
+				top:400px;
+				width:1300px;
+				overflow: scroll;
+				height:320px;
+			}
+			.main-con1{
+				position:absolute;
+				left:100px;
+				top:20px;  
+			}
+			.sub-con1
+			{	
+				position:absolute;
+				left:400px;
+				top:150px; 
+				width: 250px;
+				height: 50px;
+				font-size:25pt;
+				background-color: orange;  
+				border-radius: 12px;
+				cursor:pointer;
+			}
+			.sub-con2
+			{	
+				position:absolute;
+				left:400px;
+				top:400px; 
+				width: 250px;
+				height: 50px;
+				font-size:25pt;
+				background-color: orange;  
+				border-radius: 12px;
+				cursor:pointer;
+			}
+			.icon{
+			width:300px;
+			height:230px;
+			}
+			.loader {
+				position: fixed;
+				z-index: 99;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background:#DCE1E3;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.loader > img {
+				width: 250px;
+				height:150px
+			}
+
+			.loader.hidden {
+				animation: fadeOut 3.5s;
+				animation-fill-mode: forwards;
+			}
+
+			@keyframes fadeOut {
+				100% {
+					opacity:20;
+					visibility: hidden;
+				}
+			}
+
+			.thumb {
+				height: 100px;
+				border: 1px solid black;
+				margin: 10px;
+			}
+	 </style>
+    <title>Fake Account Detection</title>
+</head>
+<body style="background-color:#DCE1E3;">
+<div class="topnav">
+<h1 style="color:white;"><center>Fake Account Detection Using Machine Learning</center></h1>
+  <p  class="active1 active"align="right"><p style="position:absolute;top:2px;right:30px;color:white;size:25pt;">{{ user_name }}<p>
+  <p style="position:absolute;top:20px;right:20px;"><a class="active1" href="/logout">Logout</a></p>
+  <p style="position:absolute;top:0px;right:100px;"><a class="active1" href="/Restart">Restart</a></p>
+  <p style="position:absolute;top:0px;right:180px;"><a class="active1" href="/fad_parameter">Set Parameters</a></p></p><br>
+</div>
+    <center>{% with messages = get_flashed_messages() %}
+   {% if messages %}
+     <ul class="flashes">
+        {% for message in messages %}
+         <div class="message_flash"align="center">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		 <script>
+		 alert("{{ message }}");
+		 </script>
+		 </div>
+        {% endfor %}
+    </ul>
+  {% endif %}
+ {% endwith %}</center>
+<div class="wrapper">
+    <div class="sidebar">
+        <h2>Sidebar</h2>
+            {% if upload_succ==-1 %}
+				<a href="/fad_upload_dataset"><i class="fas  fa-file-import"></i>&nbsp;Upload Dataset</a>
+			{% else %}
+				<a href="/fad_upload_dataset"><i class="fas fa-home"></i>&nbsp;Upload Dataset&nbsp;<i class="fas fa-check-circle"></i></a>
+			{% endif %}
+			{% if split_succ==-1 %}
+			<a href="/fad_split_dataset"><i class="fas fa-columns"></i>&ensp;Split Dataset</a>
+			{% else %}
+            <a href="/fad_split_dataset"><i class="fas fa-columns"></i>&ensp;Split Dataset&nbsp;<i class="fas fa-check-circle"></i></a>
+			{% endif %}
+			{% if ml_succ==-1 %}
+            <a href="#"onclick="alert('Go back split dataset first')"><i class="fas fa-assistive-listening-systems"></i>&ensp;Machine Leaning </a>
+            {% else %}
+			<a href="/fad_ml"><i class="fas fa-assistive-listening-systems"></i>&ensp;Machine Leaning&nbsp;<i class="fas fa-check-circle"></i></a>
+			{% endif %}
+			<a href="/fad_analysis"><i class="fas fa-chart-bar"></i>&nbsp;Analysis</a>
+            <a href="/fad_user_input"><i class="fas fa-address-book"></i>&nbsp;Prediction</a>
+	</div>
+</div>
+<div class="loader">
+    <img src="static/loader1.gif" alt="Loading..." /></br>
+	<h2>Building Model.....</h2>
+</div>
+<div class="container1"align="center">
+
+	{% if ml_succ==1 %}
+			
+			<div class="main-con1">
+			<div>
+				<h1 style="color: #E54D2F;">Machine Leaning Model</h1>
+			</div>
+			<div>
+				<p><img src="static/analyse.png"class="icon"></img><a href="/fad_analysis"><button class="sub-con1"><i class="fas fa-chart-bar"></i>&nbsp;Analysis</button></a></p>
+			</div>
+			<div>
+				<p><img src="static/prediction.png"class="icon"></img><a href="/fad_user_input"><button class="sub-con2"><i class="fas fa-address-book"></i>&nbsp;Prediction</button></a></p>
+			</div>
+			</div>
+	{% endif %}
+</div>
+</body>
+</html>

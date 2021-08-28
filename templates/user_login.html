@@ -1,0 +1,62 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
+
+    <title>{{ title }}</title>
+</head>
+<div class="topnav">
+	<br>
+    <a href="about"><button class="deactive">About</button></a>
+
+
+    <a href="user_login" ><button class="active1 active" onclick="document.getElementById('id01').style.display='block'">LOG IN</button></a>
+	
+
+    <!--a href="doctor_login"><button onclick="document.getElementById('id02').style.display='block'">Doctor</button></a-->
+
+    <a  href="/home"><button class="deactive">Home</button></a>
+	<br>
+
+</div>
+{% block content %}
+
+  <center>{% with messages = get_flashed_messages() %}
+   {% if messages %}
+   <script>
+   alert('Invalid UserID or Password');
+	</script>
+     <ul class="flashes">
+        {% for message in messages %}
+         <div class="message_flash"></div>
+        {% endfor %}
+    </ul>
+  {% endif %}
+ {% endwith %}</center>
+
+  <form action="/user_login" method="post">
+
+
+    <div class="container">
+      <label for="email"><b>User name</b></label>
+      <input type="text" placeholder="Enter Email" name="email" >
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" >
+
+      <button type="submit">Login</button>
+
+        <label><b>New user</b></label>
+            <a href="/user_register" class ='btn2' type="submit">register</a>
+
+
+    </div>
+
+  </form>
+
+
+{% endblock content %}
+
+
+</body>
+</html>
